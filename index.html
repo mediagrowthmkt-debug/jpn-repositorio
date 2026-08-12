@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assinatura de e-mail, JPN Hardwood Floors</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: #eef1f4;
+      color: #1f1b18;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+      color: #5b3327;
+    }
+    p {
+      margin: 0 0 18px;
+      color: #696765;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 18px;
+    }
+    button, a.button {
+      appearance: none;
+      border: 0;
+      border-radius: 6px;
+      background: #5b3327;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 18px;
+      padding: 11px 14px;
+      text-decoration: none;
+    }
+    a.button {
+      background: #1f1b18;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #dfe4e9;
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(20, 40, 60, .08);
+      padding: 26px 28px;
+      overflow-x: auto;
+    }
+    .status {
+      min-height: 20px;
+      margin-top: 12px;
+      color: #5b3327;
+      font-size: 13px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Assinatura de e-mail, JPN Hardwood Floors</h1>
+    <p>Abra esta página no navegador, clique em copiar assinatura e cole no campo de assinatura do Gmail.</p>
+    <div class="actions">
+      <button type="button" id="copy">Copiar assinatura</button>
+      <a class="button" href="assinatura.html" target="_blank" rel="noopener">Abrir só o HTML</a>
+    </div>
+    <div class="card">
+      <div style="color:#9aa6b1;font-size:14px;padding:0 0 6px;border-bottom:1px solid #eef1f4;margin-bottom:18px;">Best regards,</div>
+      <div id="signature"></div>
+    </div>
+    <div class="status" id="status"></div>
+  </main>
+  <script>
+    async function loadSignature() {
+      const response = await fetch('assinatura.html', { cache: 'no-store' });
+      const html = await response.text();
+      document.getElementById('signature').innerHTML = html;
+    }
+
+    async function copySignature() {
+      const signature = document.getElementById('signature');
+      const html = signature.innerHTML;
+      const text = signature.innerText;
+
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/html': new Blob([html], { type: 'text/html' }),
+            'text/plain': new Blob([text], { type: 'text/plain' })
+          })
+        ]);
+        document.getElementById('status').textContent = 'Assinatura copiada. Agora cole no Gmail.';
+      } catch (error) {
+        const range = document.createRange();
+        range.selectNodeContents(signature);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.getElementById('status').textContent = 'Selecionei a assinatura. Pressione Ctrl+C ou Cmd+C para copiar.';
+      }
+    }
+
+    document.getElementById('copy').addEventListener('click', copySignature);
+    loadSignature();
+  </script>
+</body>
+</html>
